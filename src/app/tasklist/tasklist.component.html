@@ -1,9 +1,23 @@
+<div class="container">
+  <div>
+    <label for="task-title">Title</label>
+    <input type="text" id="task-title" >
+  </div>
 
+  <button type="button" [disabled]="!taskTitle" (click)="add(taskTitle)">
+    add task
+  </button>
+  <button type="button" (click)="search(taskTitle)" >
+    Search task
+  </button>
+</div>
 
 <div *ngFor="let task of tasks">
-<mat-card class="example-card">
+  <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-subtitle>Estimated time: {{ task.eta | date }}</mat-card-subtitle>
+      <mat-card-subtitle
+        >Estimated time: {{ task.eta | date }}</mat-card-subtitle
+      >
       <mat-card-title>{{ task.title }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -11,14 +25,13 @@
       <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-        <!-- <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
             <mat-label>Estado de la ta</mat-label>
             <mat-select [(value)]="selected">
               <mat-option value="option2">En proceso</mat-option>
               <mat-option value="option3">Terminada</mat-option>
             </mat-select>
           </mat-form-field> -->
-          
     </mat-card-actions>
     <mat-card-footer>
       <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->

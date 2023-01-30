@@ -14,7 +14,7 @@ export class TasklistComponent implements OnInit {
 
   tasks: Task[] = [];
   editTask: Task | undefined;
-  taskTitle = "";
+  taskTitle = '';
 
   constructor(
     private taskService: TaskService
@@ -49,6 +49,34 @@ export class TasklistComponent implements OnInit {
       .subscribe(task => this.tasks.push(task));
   }
 
+  edit(taskTitle: string){
+    this.update(taskTitle);
+  }
+
+  search(searchTerm: string){
+    this.editTask = undefined;
+    if(searchTerm){
+      this.taskService
+      .searchTasks(searchTerm)
+      .subscribe(tasks => (this.tasks = tasks));
+    } else {
+      this.getTasks();
+    }
+  }
+
+  update(taskTitle: string){
+    if (taskTitle && this.editTask && this.editTask.title !== taskTitle){
+      this.taskService
+      .updateTask({ ...this.editTask, title: taskTitle})
+      .subscribe( task => {
+        const e = task ? this.tasks.findIndex(t => t.id === task.id) : -1;
+        if (e > -1) {
+          this.tasks[e] = task;
+        }
+      });
+      this.editTask = undefined;
+    }
+  }
 
 
 }
