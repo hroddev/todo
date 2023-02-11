@@ -8,10 +8,59 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span>Todo Notes</span>
+    <div class="btn-container">
+      <button type="button" class="btn btn-primary">Add task</button>
+    </div>
   </mat-toolbar>
 </p>
-
-
+<div class="container"></div>
 <div class="container">
-  <app-tasklist></app-tasklist>
+  <div *ngFor="let task of tasks">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-subtitle
+          >Estimated time: {{ task.eta | date }}</mat-card-subtitle
+        >
+        <mat-card-title>{{ task.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ task.description }}</p>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+      <mat-card-actions>
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Estado de la ta</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="option2">En proceso</mat-option>
+              <mat-option value="option3">Terminada</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+      </mat-card-actions>
+      <mat-card-footer>
+        <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+      </mat-card-footer>
+    </mat-card>
+  </div>
+
+  <!-- add task modal  -->
+  <div class="modal fade" id="addtaskmodal" tabindex="-1" role="dialog"></div>
+
+  <!-- delete task modal  -->
+  <div
+    class="modal fade"
+    id="deletetaskmodal"
+    tabindex="-1"
+    role="dialog"
+  ></div>
+
+  <!-- edit task modal  -->
+  <div class="modal fade" id="edittaskmodal" tabindex="-1" role="dialog"></div>
+
+  <!-- Notification for not note -->
+  <div class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">There are not notes</h4>
+      <p>Task not found.</p>
+    </div>
+  </div>
 </div>
