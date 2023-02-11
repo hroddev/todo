@@ -77,25 +77,30 @@ export class AppComponent {
   }
 
   public onOpenModal(task: Task, mode: string):void {
+
+    const container = document.getElementById('tasks-container');
     const button = document.createElement('button');
+
     button.type = 'button';
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
 
     if (mode === 'add') {
-      button.setAttribute('data-target', 'addtaskmodal');
+      button.setAttribute('data-target', '#addtaskmodal');
     }
 
     if (mode === 'edittaskmodal') {
-      button.setAttribute('data-target', 'addtaskmodal');
+      button.setAttribute('data-target', '#addtaskmodal');
     }
 
     if (mode === 'deletetaskmodal') {
-      button.setAttribute('data-target', 'addtaskmodal');
+      button.setAttribute('data-target', '#addtaskmodal');
     }
+
+    container?.appendChild(button);
+    button.click();
   }
 
-//* https://getbootstrap.com/docs/3.4/javascript/#modals*/
 
 
 }
