@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Task } from './task';
+import { environment } from 'src/environments/environment.development';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +20,7 @@ const httpOptions = {
 })
 export class TaskService {
 
-  tasksUrl = 'http://localhost:8080/tasks'
+  tasksUrl = environment.apiBaseUrl;
 
   constructor(
     private http: HttpClient
@@ -40,7 +41,7 @@ export class TaskService {
 
     return this.http.get<Task[]>(this.tasksUrl, options);
   }
-    
+
     // ####### Save methods ################
 
     /** POST: add new task to the DB */
@@ -61,5 +62,5 @@ export class TaskService {
 
       return this.http.put<Task>(this.tasksUrl, task, httpOptions);
     }
-  
+
 }

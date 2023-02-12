@@ -1,28 +1,53 @@
-<p>
-  <mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+  <div>
+    <!-- (click)="onOpenModal(null, 'add')" -->
+    <a class="navbar-brand" style="color: white" href="#">Add task</a>
     <button
-      mat-icon-button
-      class="example-icon"
-      aria-label="Example icon-button with menu icon"
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarColor02"
+      aria-controls="navbarColor02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-      <mat-icon>menu</mat-icon>
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <span>Todo Notes</span>
-    <div class="btn-container">
-      <button type="button" class="btn btn-primary m-3">Add task</button>
-    </div>
-  </mat-toolbar>
-</p>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link"
+          >Add Employee <span class="sr-only">(current)</span></a
+        >
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+        type="search"
+
+        #key="ngModel"
+        ngModel
+        name="key"
+        id="searchName"
+        class="form-control mr-sm-2"
+        placeholder="Search employees..."
+        required
+      />
+    </form>
+  </div>
+</nav>
 
 <div class="container" id="tasks-container">
-  <div *ngFor="let task of tasks">
     <div class="row">
-      <div class="col-md-6 col-xl-3">
+      <div *ngFor="let task of tasks" class="col-md-6 col-xl-3">
+
         <div class="card m-b-30">
           <div class="card-body row">
-            <div class="col-12 card-title align-self-center mb-0">
-              <h3>{{ task.eta | date }}</h3>
-              <p class="m-0">{{ task.title }}</p>
+            <div class="col-6 card-title align-self-center mb-0">
+              <h3>{{ task.title }}</h3>
+              <p class="m-0">Estimated date: {{ task.eta | date }}</p>
             </div>
           </div>
           <div class="m-0 col-12">
@@ -32,6 +57,7 @@
             <div class="float-right btn-group btn-group-sm">
               <a
                 href="#"
+                (click)="onOpenModal(task, 'edit')"
                 class="btn btn-primary tooltips"
                 data-placement="top"
                 data-toggle="tooltip"
@@ -40,6 +66,7 @@
               </a>
               <a
                 href="#"
+                (click)="onOpenModal(task, 'delete')"
                 class="btn btn-secondary tooltips"
                 data-placement="top"
                 data-toggle="tooltip"
@@ -47,12 +74,91 @@
                 ><i class="fa fa-times"></i
               ></a>
             </div>
-
           </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="addtaskmodal"
+    tabindex="-1"
+    aria-labelledby="taskModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Add task</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddTask(addForm)">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                ngModel
+                name="title"
+                id="title"
+                aria-describedby="title"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="eta">Estimated date</label>
+              <input
+                type="date"
+                class="form-control"
+                ngModel
+                name="eta"
+                id="eta"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-check-label" for="description"
+                >Description</label
+              >
+              <input
+                type="text"
+                class="form-check-input"
+                ngModel
+                name="description"
+                id="description"
+                ngModel
+                name="description"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            [disabled]="addForm.invalid"
+            type="submit"
+            class="btn btn-primary"
+          >
+            Save changes
+          </button>
         </div>
       </div>
     </div>
   </div>
+
   <!-- add task modal  -->
   <div class="modal fade" id="addtaskmodal" tabindex="-1" role="dialog"></div>
 

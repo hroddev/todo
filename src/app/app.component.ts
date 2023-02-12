@@ -1,16 +1,17 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
-import { Task } from './tasklist/task';
-import { TaskService } from './tasklist/tasks.service';
+import { NgForm } from '@angular/forms';
+import { Task } from './task';
+import { TaskService } from './tasks.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'todo';
+export class AppComponent implements OnInit{
 
-  tasks: Task[] = [];
+  public tasks!: Task[];
   editTask: Task | undefined;
   taskTitle = '';
 
@@ -30,8 +31,15 @@ export class AppComponent {
   }
 
   getTasks(): void {
-    this.taskService.getTasks().subscribe(tasks => (this.tasks = tasks));
+    this.taskService.getTasks().subscribe(
+      (response: Task[]) => {
+      this.tasks = response;
+  },
+  (error: HttpErrorResponse) => {
+    alert(error.message);
   }
+    );
+}
 
   add(title: string): void {
     this.editTask = undefined;
@@ -76,6 +84,19 @@ export class AppComponent {
     }
   }
 
+  public onAddTask(addForm: NgForm): void {
+    this.taskService.addTask(addForm.value).subscribe(
+      (response: Task) => {
+        console.log(response);
+        this.getTasks();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+
+    )
+  }
+
   public onOpenModal(task: Task, mode: string):void {
 
     const container = document.getElementById('tasks-container');
@@ -89,12 +110,12 @@ export class AppComponent {
       button.setAttribute('data-target', '#addtaskmodal');
     }
 
-    if (mode === 'edittaskmodal') {
-      button.setAttribute('data-target', '#addtaskmodal');
+    if (mode === 'edit') {
+      button.setAttribute('data-target', '#edittaskmodal');
     }
 
-    if (mode === 'deletetaskmodal') {
-      button.setAttribute('data-target', '#addtaskmodal');
+    if (mode === 'delete') {
+      button.setAttribute('data-target', '#deletetaskmodal');
     }
 
     container?.appendChild(button);
