@@ -2,7 +2,7 @@
   <span class="navbar-brand mb-0 h1">Navbar</span>
   <div>
     <!-- (click)="onOpenModal(null, 'add')" -->
-    <a class="navbar-brand" style="color: white" href="#">Add task</a>
+    <a class="navbar-brand" style="color: white"  >Add task</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -20,7 +20,7 @@
       <li class="nav-item active">
         <a class="nav-link"
           >Add Employee <span class="sr-only">(current)</span></a
-        >
+        >       
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -45,13 +45,13 @@
 
         <div class="card m-b-30">
           <div class="card-body row">
-            <div class="col-6 card-title align-self-center mb-0">
-              <h3>{{ task.title }}</h3>
-              <p class="m-0">Estimated date: {{ task.eta | date }}</p>
+            <div class="col-12 card-title align-self-center mb-0">
+              <h3>{{ task?.title }}</h3>
+              <p class="m-0">Estimated date: {{ task?.eta | date }}</p>
             </div>
           </div>
           <div class="m-0 col-12">
-            {{ task.description }}
+            {{ task?.description }}
           </div>
           <div class="card-body">
             <div class="float-right btn-group btn-group-sm">
@@ -80,6 +80,7 @@
   </div>
 
   <!-- Modal -->
+  <!-- add task modal  -->
   <div
     class="modal fade"
     id="addtaskmodal"
@@ -159,19 +160,11 @@
     </div>
   </div>
 
-  <!-- add task modal  -->
-  <div class="modal fade" id="addtaskmodal" tabindex="-1" role="dialog"></div>
-
   <!-- delete task modal  -->
-  <div
-    class="modal fade"
-    id="deletetaskmodal"
-    tabindex="-1"
-    role="dialog"
-  ></div>
+
 
   <!-- edit task modal  -->
-  <div class="modal fade" id="edittaskmodal" tabindex="-1" role="dialog"></div>
+
 
   <!-- Notification for not note -->
   <div class="col-lg-12 col-md-12 col-xl-12">

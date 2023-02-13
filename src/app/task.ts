@@ -1,9 +1,8 @@
 export interface Task {
-    id: number,
     title: string,
     description: string,
     createDate: string,
-    eta: string,
+    eta: Date,
     finished: boolean,
     taskStatus: string
 }
