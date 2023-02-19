@@ -11,7 +11,7 @@ import { TaskService } from './tasks.service';
 })
 export class AppComponent implements OnInit {
 
-  public tasks?: Task[];
+  public tasks: Task[] = [];
   public editTask!: Task;
   public delete!: Task;
 
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
     )
   }
 
-  public onOpenModal(task: Task, mode: string): void {
+  public onOpenModal(task: Task | null, mode: string): void {
 
     const container = document.getElementById('tasks-container');
     const button = document.createElement('button');
@@ -72,6 +72,13 @@ export class AppComponent implements OnInit {
 
     container?.appendChild(button);
     button.click();
+  }
+
+  taskStatus(id: number):void {
+    const container = document.getElementById('eta-container');
+    const badge = document.createElement('span');
+    const eta = this.taskService.getTasks
+
   }
 
 
