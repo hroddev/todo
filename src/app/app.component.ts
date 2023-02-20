@@ -58,28 +58,23 @@ export class AppComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
 
     if (mode === 'add') {
-      button.setAttribute('data-target', '#addtaskmodal');
+      button.setAttribute('data-target', '#addTaskmodal');
     }
 
     if (mode === 'edit') {
-      button.setAttribute('data-target', '#edittaskmodal');
+      button.setAttribute('data-target', '#editTaskmodal');
     }
 
     if (mode === 'delete') {
 
-      button.setAttribute('data-target', '#deletetaskmodal');
+      button.setAttribute('data-target', '#deleteTaskModal');
     }
 
     container?.appendChild(button);
     button.click();
   }
 
-  taskStatus(id: number):void {
-    const container = document.getElementById('eta-container');
-    const badge = document.createElement('span');
-    const eta = this.taskService.getTasks
 
-  }
 
 
 

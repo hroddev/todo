@@ -1,12 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <span class="navbar-brand mb-0 h1">Navbar</span>
   <div>
-    <a
-      class="navbar-brand"
+    <button
+      type="button"
+      class="btn btn-primary"
       style="color: white"
       (click)="onOpenModal(null, 'add')"
       >Add task
-    </a>
+    </button>
   </div>
 </nav>
 
@@ -17,7 +18,21 @@
         <div class="card-body row">
           <div class="col-12 card-title align-self-center mb-0">
             <h3>{{ task?.title }}</h3>
-            <p class="m-0">Estimated date: {{ task?.eta | date }}</p>
+            <p class="m-0">
+              Estimated date: {{ task?.eta | date }}
+              <span
+                *ngIf="task.taskStatus === 'ON_TIME'"
+                class="badge badge-success"
+              >
+                {{ task.taskStatus }}</span
+              >
+              <span
+                *ngIf="task.taskStatus === 'LATE'"
+                class="badge badge-warning"
+              >
+                {{ task.taskStatus }}</span
+              >
+            </p>
           </div>
         </div>
         <div class="m-0 col-12">
@@ -67,9 +82,9 @@
   <!-- add task modal  -->
   <div
     class="modal fade"
-    id="addtaskmodal"
+    id="addTaskmodal"
     tabindex="-1"
-    aria-labelledby="addtaskModalLabel"
+    aria-labelledby="addTaskModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog" role="document">
@@ -100,6 +115,7 @@
                 required
               />
             </div>
+
             <div class="form-group" id="eta-container">
               <label for="eta">Estimated date</label>
               <input
@@ -111,6 +127,22 @@
                 required
               />
             </div>
+
+            <div class="form-group" id="eta-container">
+              <label for="eta">Task Status</label>
+              <select
+                type="date"
+                class="form-control"
+                ngModel
+                name="taskStatus"
+                id="taskStatus"
+                required
+              >
+                <option value="ON_TIME">On time</option>
+                <option value="LATE">Late</option>
+              </select>
+            </div>
+
             <div class="form-group">
               <label class="form-check-label" for="description "
                 >Description</label
@@ -143,9 +175,123 @@
     </div>
   </div>
 
-  <!-- delete task modal  -->
-
   <!-- edit task modal  -->
+   <div
+   class="modal fade"
+   id="editTaskmodal"
+   tabindex="-1"
+   aria-labelledby="editTaskModalLabel"
+   aria-hidden="true"
+ >
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="taskModalLabel">Edit task</h5>
+         <button
+           type="button"
+           class="close"
+           data-dismiss="modal"
+           aria-label="Close"
+         >
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+
+       <div class="modal-body">
+         <form #addForm="ngForm" (ngSubmit)="onAddTask(addForm)">
+           <div class="form-group">
+             <label for="title">Title</label>
+             <input
+               type="text"
+               class="form-control"
+               ngModel
+               name="title"
+               id="title"
+               aria-describedby="title"
+               required
+             />
+           </div>
+
+           <div class="form-group" id="eta-container">
+             <label for="eta">Estimated date</label>
+             <input
+               type="date"
+               class="form-control"
+               ngModel
+               name="eta"
+               id="eta"
+               required
+             />
+           </div>
+
+           <div class="form-group" id="eta-container">
+             <label for="eta">Task Status</label>
+             <select
+               type="date"
+               class="form-control"
+               ngModel
+               name="taskStatus"
+               id="taskStatus"
+               required
+             >
+               <option value="ON_TIME">On time</option>
+               <option value="LATE">Late</option>
+             </select>
+           </div>
+
+           <div class="form-group">
+             <label class="form-check-label" for="description "
+               >Description</label
+             >
+             <textarea
+               class="form-control"
+               name="description"
+               id="description"
+               ngModel
+               required=""
+             >
+             </textarea>
+           </div>
+           <button type="submit" class="btn btn-primary">Submit</button>
+         </form>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">
+           Close
+         </button>
+         <button
+           [disabled]="addForm.invalid"
+           type="submit"
+           class="btn btn-primary"
+         >
+           Save changes
+         </button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+  <!-- delete task modal  -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="deleteTaskModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this note?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Notification for not note -->
   <div class="col-lg-12 col-md-12 col-xl-12">
