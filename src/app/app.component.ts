@@ -35,9 +35,10 @@ export class AppComponent implements OnInit {
   }
 
   public onAddTask(addForm: NgForm): void {
-    document.getElementById('')?.click();
+    document.getElementById('add-task-form')?.click();
     this.taskService.addTask(addForm.value).subscribe(
       (response: Task) => {
+        // TODO: remove console.log
         console.log(response);
         this.getTasks();
       },
